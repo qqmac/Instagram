@@ -22,7 +22,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
 
         // Do any additional setup after loading the view.
         tableView.delegate = self
-        tableView.dataSource = self
+        //tableView.dataSource = self
         
         tableView.rowHeight = 320
         
@@ -44,6 +44,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
                             
                             self.photos = responseDictionary["data"] as? [NSDictionary]
                             self.tableView.reloadData()
+                            self.tableView.dataSource = self
                     }
                 }
         });
