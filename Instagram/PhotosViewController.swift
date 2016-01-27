@@ -22,7 +22,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
 
         // Do any additional setup after loading the view.
         tableView.delegate = self
-        //tableView.dataSource = self
+        tableView.dataSource = self
         
         tableView.rowHeight = 320
         
@@ -44,7 +44,6 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
                             
                             self.photos = responseDictionary["data"] as? [NSDictionary]
                             self.tableView.reloadData()
-                            self.tableView.dataSource = self
                     }
                 }
         });
@@ -57,6 +56,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        
         if let photos = photos {
             return photos.count
         }
@@ -77,6 +77,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         let imageUrl = NSURL(string: photoPath)
         
         cell.photoView.setImageWithURL(imageUrl!)
+        cell.backgroundColor = UIColor.blackColor()
         
         return cell
         
