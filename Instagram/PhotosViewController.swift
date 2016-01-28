@@ -76,7 +76,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCell", forIndexPath: indexPath) as! PhotoCell
         
-        let photo = photos![indexPath.row]
+        let photo = photos![indexPath.section]
         
         let photoPath = photo.valueForKeyPath("images.low_resolution.url") as! String
         
@@ -109,9 +109,10 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         profileView.setImageWithURL(profileUrl!)
         headerView.addSubview(profileView)
         
-        let userLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 50))
+        let userLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 30))
         userLabel.text = username;
-        userLabel.textColor = UIColor.blackColor()
+        userLabel.textColor = UIColor.blueColor()
+        userLabel.font = UIFont.boldSystemFontOfSize(15)
         
         headerView.addSubview(userLabel)
         
@@ -123,7 +124,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 60
     }
     
     func onRefresh(refreshControl: UIRefreshControl)
