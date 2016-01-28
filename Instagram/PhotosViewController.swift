@@ -13,7 +13,8 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     
-    var photos: [NSDictionary]?
+    //var photos: [NSDictionary]?
+    var photos: [NSDictionary]! = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +57,18 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        
-        if let photos = photos {
+        return 1
+        /*if let photos = photos {
             return photos.count
         }
         else {
             return 0
-        }
+        }*/
         
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return photos.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
@@ -83,6 +88,35 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        headerView.backgroundColor = UIColor(white: 1, alpha: 0.9)
+        
+        let photo = photos[section]
+        let user = photo["user"] as! NSDictionary
+        let username = user["username"] as! String
+        let profileUrl = NSURL(string: user["profile_picture"] as! String)
+        
+        let profileView = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        profileView.clipsToBounds = true
+        profileView.layer.cornerRadius = 15;
+        profileView.layer.borderColor = UIColor(white: 0.7, alpha: 0.8).CGColor
+        profileView.layer.borderWidth = 1;
+        profileView.setImageWithURL(profileUrl!)
+        headerView.addSubview(profileView)
+        
+        let usernameLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 30))
+        usernameLabel.text = username;
+        usernameLabel.font = UIFont.boldSystemFontOfSize(16)
+        usernameLabel.textColor = UIColor(red: 8/255.0, green: 64/255.0, blue: 127/255.0, alpha: 1)
+        headerView.addSubview(usernameLabel)
+        
+        return headerView;
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
 
     /*
     // MARK: - Navigation
