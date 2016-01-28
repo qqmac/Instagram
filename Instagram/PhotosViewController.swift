@@ -9,7 +9,7 @@
 import UIKit
 import AFNetworking
 
-class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -18,6 +18,11 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        tableView.insertSubview(refreshControl, atIndex: 0)
         
         self.title = "Instagram"
 
@@ -67,10 +72,6 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return photos.count
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCell", forIndexPath: indexPath) as! PhotoCell
@@ -89,33 +90,67 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        headerView.backgroundColor = UIColor(white: 1, alpha: 0.9)
-        
+        // get username and profile picture from api
         let photo = photos[section]
         let user = photo["user"] as! NSDictionary
         let username = user["username"] as! String
         let profileUrl = NSURL(string: user["profile_picture"] as! String)
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        headerView.backgroundColor = UIColor.whiteColor()
         
         let profileView = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
         profileView.clipsToBounds = true
         profileView.layer.cornerRadius = 15;
         profileView.layer.borderColor = UIColor(white: 0.7, alpha: 0.8).CGColor
         profileView.layer.borderWidth = 1;
+        
         profileView.setImageWithURL(profileUrl!)
         headerView.addSubview(profileView)
         
-        let usernameLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 30))
+        let usernameLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 50))
         usernameLabel.text = username;
         usernameLabel.font = UIFont.boldSystemFontOfSize(16)
-        usernameLabel.textColor = UIColor(red: 8/255.0, green: 64/255.0, blue: 127/255.0, alpha: 1)
+        usernameLabel.textColor = UIColor.blackColor()
         headerView.addSubview(usernameLabel)
         
         return headerView;
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return photos.count
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl)
+    {
+        let clientId = "e05c462ebd86446ea48a5af73769b602"
+        let url2 = NSURL(string:"https://api.instagram.com/v1/media/popular?client_id=\(clientId)")
+        let myRequest = NSURLRequest(URL: url2!)
+        
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(myRequest,
+            completionHandler: { (data, response, error) in
+                if let data = data {
+                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
+                        data, options:[]) as? NSDictionary {
+                            self.photos = responseDictionary["data"] as! [NSDictionary]
+                            
+                            self.tableView.reloadData()
+                            
+                            refreshControl.endRefreshing()
+                    }
+                }
+        });
+        task.resume()
     }
 
     /*
