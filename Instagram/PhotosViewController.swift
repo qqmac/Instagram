@@ -94,6 +94,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         let photo = photos[section]
         let user = photo["user"] as! NSDictionary
         let username = user["username"] as! String
+        
         let profileUrl = NSURL(string: user["profile_picture"] as! String)
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -108,11 +109,11 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         profileView.setImageWithURL(profileUrl!)
         headerView.addSubview(profileView)
         
-        let usernameLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 50))
-        usernameLabel.text = username;
-        usernameLabel.font = UIFont.boldSystemFontOfSize(16)
-        usernameLabel.textColor = UIColor.blackColor()
-        headerView.addSubview(usernameLabel)
+        let userLabel = UILabel(frame: CGRect(x: 50, y: 10, width: 250, height: 50))
+        userLabel.text = username;
+        userLabel.textColor = UIColor.blackColor()
+        
+        headerView.addSubview(userLabel)
         
         return headerView;
     }
