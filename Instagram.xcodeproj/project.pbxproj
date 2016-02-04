@@ -15,6 +15,7 @@
 		907DC15F1C58735F00A116D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 907DC15D1C58735F00A116D1 /* Main.storyboard */; };
 		907DC1611C58735F00A116D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 907DC1601C58735F00A116D1 /* Assets.xcassets */; };
 		907DC1641C58735F00A116D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 907DC1621C58735F00A116D1 /* LaunchScreen.storyboard */; };
+		90BACEE71C63BB6400F6AA70 /* PhotoDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BACEE61C63BB6400F6AA70 /* PhotoDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		907DC1601C58735F00A116D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		907DC1631C58735F00A116D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		907DC1651C58735F00A116D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90BACEE61C63BB6400F6AA70 /* PhotoDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewController.swift; sourceTree = "<group>"; };
 		EFFDCAA61D8C290BA62519EC /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				901DEF1B1C58757C006ADE62 /* PhotosViewController.swift */,
+				90BACEE61C63BB6400F6AA70 /* PhotoDetailsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				901DEF1E1C587618006ADE62 /* PhotoCell.swift in Sources */,
+				90BACEE71C63BB6400F6AA70 /* PhotoDetailsViewController.swift in Sources */,
 				901DEF1C1C58757C006ADE62 /* PhotosViewController.swift in Sources */,
 				907DC15C1C58735F00A116D1 /* ViewController.swift in Sources */,
 				907DC15A1C58735F00A116D1 /* AppDelegate.swift in Sources */,
